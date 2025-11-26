@@ -30,60 +30,58 @@ mini-crm/
 ├── src/
 │ ├── api/ # Эндпоинты и роутеры
 │ │ ├── v1/ # API v1
-│ │ │ ├── auth.py
-│ │ │ ├── organizations.py
-│ │ │ ├── contacts.py
-│ │ │ ├── deals.py
-│ │ │ ├── tasks.py
-│ │ │ ├── activities.py
-│ │ │ └── analytics.py
-│ │ └── dependencies.py # Зависимости и middleware
-│ ├── core/ # Ядро приложения
-│ │ ├── config.py # Конфигурация
-│ │ ├── security.py # JWT и хеширование
-│ │ └── database.py # Настройки БД
+│ │ │ ├── routes/
+│ │ │ │   |─── auth.py
+│ │ │ │   |─── organizations.py
+│ │ │ │   |─── contacts.py
+│ │ │ │   |─── deals.py
+│ │ │ │   |─── tasks.py
+│ │ │ │   |─── activities.py
+│ │ │ │   └── analytics.py
+│ │ │ ├── schemas/
+│ │ │ │   |─── activities_schemas.py
+│ │ │ │   |─── auth_schemas.py
+│ │ │ │   |─── contacts_schemas.py
+│ │ │ │   |─── deals_schemas.py
+│ │ │ │   |─── organization_schemas.py
+│ │ │ │   └── task_schemas.py
+│ │ └── dependencies.py # Зависимости
+│ │ └── router.py
 │ ├── models/ # SQLAlchemy модели
-│ │ ├── user.py
-│ │ ├── organization.py
-│ │ ├── contact.py
-│ │ ├── deal.py
-│ │ ├── task.py
-│ │ └── activity.py
-│ ├── schemas/ # Pydantic схемы
-│ │ ├── auth.py
-│ │ ├── user.py
-│ │ ├── organization.py
-│ │ ├── contact.py
-│ │ ├── deal.py
-│ │ ├── task.py
-│ │ ├── activity.py
-│ │ └── analytics.py
+│ │ ├── constants.py
+│ │ ├── core.py
+│ │ ├── crm.py
+│ │ ├── event.py
 │ ├── services/ # Бизнес-логика
 │ │ ├── auth_service.py
 │ │ ├── organization_service.py
-│ │ ├── contact_service.py
-│ │ ├── deal_service.py
-│ │ ├── task_service.py
-│ │ └── analytics_service.py
+│ │ ├── organization_member_service.py
+│ │ ├── contacts_service.py
+│ │ ├── deals_service.py
+│ │ ├── tasks_service.py
+│ │ └── activity_service.py
 │ ├── repositories/ # Работа с данными
-│ │ ├── base.py
-│ │ ├── user_repository.py
-│ │ ├── organization_repository.py
-│ │ ├── contact_repository.py
-│ │ ├── deal_repository.py
-│ │ ├── task_repository.py
-│ │ └── activity_repository.py
-│ ├── migrations/ # Alembic миграции
+│ │ ├── config.py
+│ │ ├── database.py
+│ │ ├── refresh_token_rep.py
+│ │ ├── user_rep.py
+│ │ ├── organization_rep.py
+│ │ ├── contacts_rep.py
+│ │ ├── deals_rep.py
+│ │ ├── tasks_rep.py
+│ │ └── activities_rep.py
+│ ├── alembic/ # Alembic миграции
+│ ├── Dockerfile
+│ ├── requirements.txt
 │ └── main.py # Точка входа
 ├── tests/
-│ ├── unit/ # Юнит-тесты
-│ ├── integration/ # Интеграционные тесты
 │ ├── conftest.py # Фикстуры
-│ └── test_data/ # Тестовые данные
+│ ├── test_integrations.py # Фикстуры
+│ ├── test_services.py # Фикстуры
+│ └── test_api.py
+│
 ├── docker-compose.yml
 ├── Dockerfile
-├── requirements.txt
-└── alembic.ini
 ```
 
 ## Настройка окружения
@@ -94,27 +92,27 @@ mini-crm/
 # Database
 DB_HOST=localhost
 DB_PORT=5432
-DB_NAME=mini_crm
-DB_USER=your_db_user
-DB_PASS=your_db_password
+POSTGRES_DB=mini_crm
+POSTGRES_USER=your_db_user
+POSTGRES_PASSWORD=your_db_password
 
 # Security
-JWT_SECRET_KEY=your_jwt_secret_key
-JWT_ALGORITHM=HS256
+SECRET_KEY=your_jwt_secret_key
+ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=30
-REFRESH_TOKEN_EXPIRE_DAYS=7
 ```
 2. Скопируйте `.test.env.example` в `.test.env` и заполните значениями:
 
 ```ini
-DB_USER=your_db_user
-DB_PASS=your_db_password
-DB_NAME=spimex_db_test
+POSTGRES_USER=your_db_user
+POSTGRES_PASSWORD=your_db_password
+POSTGRES_DB=crm_db_test
 DB_HOST=localhost
 DB_PORT=5432
-REDIS_HOST=localhost
-REDIS_PORT=6379
-MODE=TEST
+
+SECRET_KEY=your_jwt_secret_key
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=30
 ```
 ## 🏃 Запуск проекта
 
