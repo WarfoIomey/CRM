@@ -10,6 +10,8 @@
 ![Pydantic](https://img.shields.io/badge/Pydantic-92000?style=for-the-badge&logo=python&logoColor=white)
 ![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![Alembic](https://img.shields.io/badge/Alembic-00A4EF?style=for-the-badge&logo=alembic&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 
 ## Возможности
 
