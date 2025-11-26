@@ -48,6 +48,6 @@ async def get_deals_funnel(
 ):
     deal_repo = DealsRepository(db)
     deal_service = DealService(deal_repo)
-    return await deal_service.get_summary(
+    return await deal_service.get_funnel(
         organization_id=organization_id,
     )

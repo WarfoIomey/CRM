@@ -3,15 +3,17 @@ from .core import (
     OrganizationMemberModel,
     OrganizationMemberPermissionModel,
     UserModel,
+    RefreshTokenModel,
 )
 from .crm import ContactModel, DealModel, TaskModel, ActivityModel
 from .event import * # noqa
 
 __all__ = [
     'OrganizationModel',
-    'UserModel',
     'OrganizationMemberModel',
     'OrganizationMemberPermissionModel',
+    'UserModel',
+    'RefreshTokenModel',
     'ContactModel',
     'DealModel',
     'TaskModel',

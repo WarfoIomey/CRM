@@ -34,10 +34,10 @@ class TasksRepository:
     async def get_tasks(
         self,
         organization_id: int,
-        deal_id: Optional[int],
-        only_open: Optional[bool],
-        due_before: Optional[date],
-        due_after: Optional[date],
+        deal_id: Optional[int] = None,
+        only_open: Optional[bool] = None,
+        due_before: Optional[date] = None,
+        due_after: Optional[date] = None,
     ) -> Sequence[TaskModel]:
         """Получить список задач организации."""
         query = select(TaskModel).join(DealModel).where(

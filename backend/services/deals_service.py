@@ -29,14 +29,14 @@ class DealService:
         organization_id: int,
         page: int,
         page_size: int,
-        status: Optional[list[str]],
-        min_amount: Optional[float],
-        max_amount: Optional[float],
-        stage: Optional[str],
-        owner_id: Optional[int],
         order_by: str,
         order: str,
         user_role: str,
+        status: Optional[list[str]] = None,
+        min_amount: Optional[float] = None,
+        max_amount: Optional[float] = None,
+        stage: Optional[str] = None,
+        owner_id: Optional[int] = None,
     ) -> list[DealsSchema]:
         """Получить сделки, в которых состоит пользователь."""
         deals = await self.deal_repo.get_deals(

@@ -19,10 +19,10 @@ class TaskService:
     async def get_tasks(
         self,
         organization_id: int,
-        deal_id: Optional[int],
-        only_open: Optional[bool],
-        due_before: Optional[date],
-        due_after: Optional[date],
+        deal_id: Optional[int] = None,
+        only_open: Optional[bool] = None,
+        due_before: Optional[date] = None,
+        due_after: Optional[date] = None,
     ) -> list[TasksSchema]:
         """Получить задачи организации."""
         tasks = await self.task_repo.get_tasks(
@@ -62,6 +62,29 @@ class TaskService:
                     status_code=403,
                     detail="Вы не можете создавать задачи для чужой сделки"
                 )
+        if not title or not title.strip():
+            raise HTTPException(
+                status_code=400,
+                detail="Название не может быть пустым"
+            )
+
+        if len(title) > 100:
+            raise HTTPException(
+                status_code=400,
+                detail="Название не может превышать 100 символов"
+            )
+
+        if not description or not description.strip():
+            raise HTTPException(
+                status_code=400,
+                detail="Описание не может быть пустым"
+            )
+
+        if len(description) > 300:
+            raise HTTPException(
+                status_code=400,
+                detail="Длинна описание не может превышать 300 символов"
+            )
         task = await self.task_repo.create({
             "deal_id": deal_id,
             "title": title,

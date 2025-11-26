@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from api.v1.routes import (
+from .routes import (
     auth,
     analytics,
     deals,

@@ -1,5 +1,11 @@
 from datetime import datetime
-from pydantic import BaseModel, Field, ConfigDict
+from pydantic import (
+    BaseModel,
+    Field,
+    ConfigDict,
+    constr,
+    EmailStr
+)
 
 
 class ContactsSchema(BaseModel):
@@ -24,6 +30,6 @@ class ContactCreateSchema(BaseModel):
 
     model_config = ConfigDict(extra="forbid")
 
-    name: str
-    email: str
-    phone: str
+    name: str = Field(..., min_length=1)
+    email: EmailStr
+    phone: str = Field(..., min_length=1)

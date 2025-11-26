@@ -34,5 +34,5 @@ class TaskCreateSchema(BaseModel):
     @field_validator("due_date")
     def check_due_date(cls, value):
         if value < date.today():
-            raise ValueError("Дата завершения не может быть в прошлом")
+            raise ValueError("Дата выполнения не может быть в прошлом")
         return value

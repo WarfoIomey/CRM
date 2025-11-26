@@ -158,7 +158,7 @@ class DealsRepository:
             .group_by(DealModel.stage, DealModel.status)
         )
         result = await self.session.execute(stmt)
-        funnel_data: dict = {}
+        funnel_data: dict[str, dict[str, int]] = {}
         for row in result:
             stage = row.stage.value
             status = row.status.value
@@ -169,13 +169,16 @@ class DealsRepository:
             "negotiation",
             "closed"
         ]
-        conversion = {}
+
+        conversion: dict[str, float | None] = {}
+
         for i in range(1, len(stages_order)):
             prev_stage = stages_order[i - 1]
             curr_stage = stages_order[i]
 
-            prev_count = sum(funnel_data[prev_stage].values())
-            curr_count = sum(funnel_data[curr_stage].values())
+            prev_count = sum(funnel_data.get(prev_stage, {}).values())
+            curr_count = sum(funnel_data.get(curr_stage, {}).values())
+
             if prev_count > 0:
                 conversion[curr_stage] = round(
                     curr_count / prev_count * 100,
@@ -183,4 +186,5 @@ class DealsRepository:
                 )
             else:
                 conversion[curr_stage] = None
+
         return {"funnel": funnel_data, "conversion": conversion}
